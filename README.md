@@ -1,2 +1,2 @@
-# Album
-Jêdrzej Bronis³aw
+ï»¿# Album
+JÄ™drzej BronisÅ‚aw
