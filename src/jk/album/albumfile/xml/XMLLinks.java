@@ -27,10 +27,10 @@ public class XMLLinks {
 			Element elLink;
 			elLink = new Element(XMLElemanetsName.elLink);
 
-			String path = PathTool.makeRelativePath(o.getPath(), albumFile.getRecentFile());
+			String path = PathTool.makeRelativePath(o.getRawPath(), albumFile.getRecentFile());
 //			path = o.getPath();
 			if (path == null) {
-				path = o.getPath();
+				path = o.getRawPath();
 				elLink.setAttribute(XMLElemanetsName.atLinkType, XMLElemanetsName.valLinkTypeOther);
 			} else {
 				o.checkFile();

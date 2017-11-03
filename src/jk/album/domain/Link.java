@@ -8,7 +8,7 @@ import jk.album.domain.tools.PathTool;
 public class Link {
 
 	private String basePath;
-	private String path;
+	private String rawPath;
 	private Date checkDate = null;
 	private boolean correctLink = false;
 
@@ -24,18 +24,25 @@ public class Link {
 //	}
 
 	public Link(String path) {
-		this.path = path;
+		this.rawPath = path;
 	}
 
-	public void setPath(String path) {
-		this.path = path;
+	public void setBasePath(String basePath) {
+		this.basePath = basePath;
 	}
-	public String getPath() {
-		return path;
+	public String getBasePath() {
+		return basePath;
+	}
+	
+	public void setRawPath(String path) {
+		this.rawPath = path;
+	}
+	public String getRawPath() {
+		return rawPath;
 	}
 
 	public String getAbsPath() {
-		return PathTool.makeAbsolutePath(path, basePath);
+		return PathTool.makeAbsolutePath(rawPath, basePath);
 	}
 
 	public Date getCheckDate() {
@@ -44,7 +51,7 @@ public class Link {
 
 	public void checkFile()
 	{
-		File file = new File(path);
+		File file = new File(rawPath);
 		correctLink = file.exists();
 		checkDate = new Date();
 	}

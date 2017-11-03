@@ -166,6 +166,8 @@ public class AlbumFile {
 		photos  = xmlPhotos.load(root);
 		defaultPhoto = xmlDefaultPhoto.load(root);
 
+		addBasePathToLinks(filePath);
+
 
 		return true;
 	}
@@ -173,13 +175,16 @@ public class AlbumFile {
 	public boolean save(String filePath){
 		File file = new File(filePath);
 		try {
-			recentFile = file.getCanonicalPath();
+			filePath = file.getCanonicalPath();
 		} catch (IOException e1) {
-			recentFile = file.getAbsolutePath();
+			filePath = file.getAbsolutePath();
 		}
+		recentFile = filePath;
+		
 		Element root = new Element(XMLElemanetsName.rootName);
 		Document doc = new Document(root);
 
+		addBasePathToLinks(filePath);
 		checkCohesion();
 		editDate = new Date();
 		if (createDate == null) createDate = new Date();
@@ -203,15 +208,26 @@ public class AlbumFile {
 //		if (elPhotos != null) root.addContent(elPhotos);
 
 		XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+		FileOutputStream foStream;
 		try {
-			outputter.output(doc, new FileOutputStream(file));
+			foStream = new FileOutputStream(file);
+			outputter.output(doc, foStream);
+			foStream.close();
 		} catch (IOException e) {
 			return false;
+//		} finally {
 		}
 
 		return true;
 	}
 
+
+	private void addBasePathToLinks(String filePath) {
+		if (links == null) links = new ArrayList<>();
+		
+		for(Link l : links)
+			l.setBasePath(filePath);
+	}
 
 	private void checkCohesion()
 	{
