@@ -43,6 +43,20 @@ public class PathTool {
 		return relPath.toString();
 	}
 
+	public static String paretnPath(String path){
+		StringBuffer sb = new StringBuffer();
+		String[] pathTab = path.split(Pattern.quote(separator));
+
+		pathTab = shortPath(pathTab);
+
+//		for (String s : pathTab)
+		for (int i=0; i<pathTab.length-1; i++)
+			sb.append(pathTab[i]).append(separator);
+		sb.append(pathTab[pathTab.length-1]);
+
+		return sb.toString();
+	}
+
 	private static String[] shortPath(String[] path) {
 		String[] result = new String[path.length-1];
 		for(int i=0; i<result.length; i++)
@@ -63,11 +77,17 @@ public class PathTool {
 	}
 
 	public static String makeAbsolutePath(String relFilePath, String absPlacePath){
-		File file  = new File(relFilePath);
-		File place = new File(absPlacePath);
+		File file;
+		File place;
 
+		if (relFilePath == null) return null;
+		file  = new File(relFilePath);
 		if (file.isAbsolute()) return relFilePath;
+
+		if (absPlacePath == null) return null;
+		place = new File(absPlacePath);
 		if (!place.isAbsolute()) return null;
+
 
 		String[] fileList  = relFilePath.split(Pattern.quote(separator));
 		String[] placeList = absPlacePath.split(Pattern.quote(separator));

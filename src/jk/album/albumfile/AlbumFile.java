@@ -29,6 +29,7 @@ import jk.album.domain.Link;
 import jk.album.domain.Photo;
 import jk.album.domain.Place;
 import jk.album.domain.marks.Mark;
+import jk.album.domain.tools.PathTool;
 
 public class AlbumFile {
 
@@ -132,11 +133,9 @@ public class AlbumFile {
 	public boolean load(String filePath){
 
 		File file = new File(filePath);
-		try {
-			recentFile = file.getCanonicalPath();
-		} catch (IOException e1) {
-			recentFile = file.getAbsolutePath();
-		}
+		filePath = PathTool.tryCanonicalPath(filePath);
+		recentFile = filePath;
+
 		SAXBuilder saxBuilder = new SAXBuilder();
 
 		Document document;
@@ -166,7 +165,7 @@ public class AlbumFile {
 		photos  = xmlPhotos.load(root);
 		defaultPhoto = xmlDefaultPhoto.load(root);
 
-		addBasePathToLinks(filePath);
+		addBasePathToLinks(PathTool.paretnPath(filePath));
 
 
 		return true;
@@ -180,11 +179,11 @@ public class AlbumFile {
 			filePath = file.getAbsolutePath();
 		}
 		recentFile = filePath;
-		
+
 		Element root = new Element(XMLElemanetsName.rootName);
 		Document doc = new Document(root);
 
-		addBasePathToLinks(filePath);
+		addBasePathToLinks(PathTool.paretnPath(filePath));
 		checkCohesion();
 		editDate = new Date();
 		if (createDate == null) createDate = new Date();
@@ -224,7 +223,7 @@ public class AlbumFile {
 
 	private void addBasePathToLinks(String filePath) {
 		if (links == null) links = new ArrayList<>();
-		
+
 		for(Link l : links)
 			l.setBasePath(filePath);
 	}

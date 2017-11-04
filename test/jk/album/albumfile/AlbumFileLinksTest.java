@@ -13,7 +13,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import jk.album.domain.Link;
-import jk.album.domain.tools.PathTool;
 
 public class AlbumFileLinksTest {
 
@@ -44,8 +43,6 @@ public class AlbumFileLinksTest {
 			File f1;
 			f1 = new File("testLinkFile.alb");
 			f1.createNewFile();
-			System.out.println(f1.getAbsolutePath());
-			System.out.println(PathTool.tryCanonicalPath(f1.getAbsolutePath()));
 			links.add(new Link(f1.getAbsolutePath()));
 		} catch (IOException e) {}
 
@@ -60,14 +57,12 @@ public class AlbumFileLinksTest {
 
 		albumFile.save(fileName);
 
-//		albumFile = AlbumFileFactory.build();
+		albumFile = AlbumFileFactory.build();
 		albumFile.load(fileName);
 	}
 
 	@AfterClass
 	public static void clear(){
-		albumFile = null;
-		System.out.println("---");
 		File f1;
 		f1 = new File("testLinkFile.alb");
 		f1.delete();
@@ -101,16 +96,8 @@ public class AlbumFileLinksTest {
 
 	@Test
 	public void checkCorrectLink() {
-		String rawPath = albumFile.getLinks().get(3).getRawPath();
 		String absPath = albumFile.getLinks().get(3).getAbsPath();
-//		String absPath = PathTool.makeAbsolutePath(path, fileName);
-//		System.out.println(absPath);
-		System.out.println("rawPath: " + rawPath);
-		System.out.println("absPath: " + absPath);
-		File f = new File(rawPath);
-
-		System.out.println("canPath: " + PathTool.tryCanonicalPath(rawPath));
-		assertTrue(f.exists());
+		assertTrue(new File(absPath).exists());
 	}
 
 	@Test

@@ -86,27 +86,27 @@ public class PathToolMakeAbsPathTest {
 
 	@Test
 	public void placePathIsPathToAnotherFile_theSameDir() {
-		String rp = makeAbsolutePath("file.txt", absPathToTestFile);
-		assertEquals(absPathToTestDir + "\\file.txt", rp);
+		String ap = makeAbsolutePath("file.txt", absPathToTestFile);
+		assertEquals(absPathToTestDir + "\\file.txt", ap);
 	}
 
 	@Test
 	public void placePathIsPathToAnotherFile_descendantDir() {
-		String rp = makeAbsolutePath("des\\file.txt", absPathToTestFile);
-		assertEquals(absPathToTestDir + "\\des\\file.txt", rp);
+		String ap = makeAbsolutePath("des\\file.txt", absPathToTestFile);
+		assertEquals(absPathToTestDir + "\\des\\file.txt", ap);
 	}
 
 	@Test
 	public void placePathIsPathToAnotherFile_ancestorDir() {
-		String rp = makeAbsolutePath("..\\des\\file.txt", absPathToTestFile);
+		String ap = makeAbsolutePath("..\\des\\file.txt", absPathToTestFile);
 		String expectedPath = PathTool.tryCanonicalPath(absPathToTestDir + "\\..\\des\\file.txt");
-		assertEquals(expectedPath, rp);
+		assertEquals(expectedPath, ap);
 	}
 
 	@Test
 	public void fileIsChildOfPlace() {
-		String rp = makeAbsolutePath("file.txt", "C:\\abc\\dir\\");
-		assertEquals("C:\\abc\\dir\\file.txt", rp);
+		String ap = makeAbsolutePath("file.txt", "C:\\abc\\dir\\");
+		assertEquals("C:\\abc\\dir\\file.txt", ap);
 	}
 
 //	@Test
@@ -129,25 +129,49 @@ public class PathToolMakeAbsPathTest {
 
 	@Test
 	public void fileIsSibilingsOfPlace() {
-		String rp = makeAbsolutePath("..\\file.txt", "C:\\abc\\dir\\");
-		assertEquals("C:\\abc\\file.txt", rp);
+		String ap = makeAbsolutePath("..\\file.txt", "C:\\abc\\dir\\");
+		assertEquals("C:\\abc\\file.txt", ap);
 	}
 
 	@Test
 	public void fileIsCousinsOfPlace() {
-		String rp = makeAbsolutePath("..\\..\\def1\\file.txt", "C:\\abc\\def2\\dir\\");
-		assertEquals("C:\\abc\\def1\\file.txt", rp);
+		String ap = makeAbsolutePath("..\\..\\def1\\file.txt", "C:\\abc\\def2\\dir\\");
+		assertEquals("C:\\abc\\def1\\file.txt", ap);
 	}
 
 	@Test
 	public void fileOnAnotherDisc_BothAbsolutePath() {
-		String rp = makeAbsolutePath("D:\\abc\\dir\\file.txt", "C:\\abc\\dir\\");
-		assertEquals("D:\\abc\\dir\\file.txt", rp);
+		String ap = makeAbsolutePath("D:\\abc\\dir\\file.txt", "C:\\abc\\dir\\");
+		assertEquals("D:\\abc\\dir\\file.txt", ap);
 	}
 
 	@Test
 	public void fileOnAnotherDisc_FileRelativePath() {
 		String ap = makeAbsolutePath("..\\..\\D:\\abc\\dir\\file.txt", "C:\\abc\\");
+		assertNull(ap);
+	}
+
+	@Test
+	public void placePathIsNull_filePathIsRelative() {
+		String ap = makeAbsolutePath("..\\des\\file.txt", null);
+		assertNull(ap);
+	}
+
+	@Test
+	public void placePathIsNull_filePathIsAbsolute() {
+		String ap = makeAbsolutePath("C:\\des\\file.txt", null);
+		assertEquals("C:\\des\\file.txt", ap);
+	}
+
+	@Test
+	public void filePathIsNull_placePathIsAbsolute() {
+		String ap = makeAbsolutePath(null, "C:\\des\\files");
+		assertNull(ap);
+	}
+
+	@Test
+	public void filePathIsNull_placePathIsRelative() {
+		String ap = makeAbsolutePath(null, "des\\files");
 		assertNull(ap);
 	}
 

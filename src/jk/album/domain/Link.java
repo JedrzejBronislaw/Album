@@ -33,7 +33,7 @@ public class Link {
 	public String getBasePath() {
 		return basePath;
 	}
-	
+
 	public void setRawPath(String path) {
 		this.rawPath = path;
 	}

@@ -66,4 +66,9 @@ public class PathToolMakeRelPathTest {
 		assertEquals("D:\\abc\\dir\\file.txt", rp);
 	}
 
+	@Test
+	public void testFromRealError() {
+		String rp = makeRelativePath("E:\\a\\b\\c\\d\\testLinkFile.alb", "E:\\a\\b\\c\\d\\testDir");
+		assertEquals("..\\testLinkFile.alb", rp);
+	}
 }

@@ -27,7 +27,7 @@ public class XMLLinks {
 			Element elLink;
 			elLink = new Element(XMLElemanetsName.elLink);
 
-			String path = PathTool.makeRelativePath(o.getRawPath(), albumFile.getRecentFile());
+			String path = PathTool.makeRelativePath(o.getRawPath(), o.getBasePath());
 //			path = o.getPath();
 			if (path == null) {
 				path = o.getRawPath();
