@@ -2,8 +2,10 @@ package jk.album.albumfile;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.util.ArrayList;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -40,6 +42,11 @@ public class AlbumFileBeingsTest {
 
 		albumFile = AlbumFileFactory.build();
 		albumFile.load(fileName);
+	}
+
+	@AfterClass
+	public static void clear(){
+		new File(fileName).delete();
 	}
 
 	@Test

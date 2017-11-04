@@ -3,8 +3,10 @@ package jk.album.albumfile;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+import java.io.File;
 import java.util.ArrayList;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -39,6 +41,11 @@ public class AlbumFileTimesTest {
 
 		albumFileAfter = AlbumFileFactory.build();
 		albumFileAfter.load(fileName);
+	}
+
+	@AfterClass
+	public static void clear(){
+		new File(fileName).delete();
 	}
 
 	@Test

@@ -2,9 +2,11 @@ package jk.album.albumfile;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -59,6 +61,11 @@ public class AlbumFileDefaultPhotoTest {
 		albumFile = AlbumFileFactory.build();
 		albumFile.load(fileName);
 
+	}
+
+	@AfterClass
+	public static void clear(){
+		new File(fileName).delete();
 	}
 
 	@Test
